@@ -1,12 +1,20 @@
-package com.example.d308vacationplanner;
+package com.example.d308vacationplanner.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.d308vacationplanner.Entities.Vacation;
+import com.example.d308vacationplanner.R;
+
+import java.time.LocalDate;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +27,21 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        Button button = findViewById(R.id.addVacaButton);
+        button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddVacation.class);
+                startActivity(intent);
+
+                //FIXME: Use following block to test Entities
+                Vacation testVaca = new Vacation("Hawaii", "Hilton", LocalDate.now(), LocalDate.now());
+
+
+            }
         });
     }
 }
