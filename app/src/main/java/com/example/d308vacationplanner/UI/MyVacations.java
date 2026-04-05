@@ -11,34 +11,28 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.d308vacationplanner.Entities.Vacation;
 import com.example.d308vacationplanner.R;
 
-import java.time.LocalDate;
-
-public class MainActivity extends AppCompatActivity {
+public class MyVacations extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_vacations);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        Button button = findViewById(R.id.myVacaButton);
+        Button button = findViewById(R.id.addVacaButton);
         button.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MyVacations.class);
+                Intent intent = new Intent(MyVacations.this, AddVacation.class);
                 startActivity(intent);
-
-                //FIXME: Use following block to test Entities
-                //Vacation testVaca = new Vacation("Hawaii", "Hilton", LocalDate.now(), LocalDate.now());
 
 
             }

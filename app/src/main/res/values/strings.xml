@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">D308 Vacation Planner</string>
+    <string name="app_name">Vacation Planner</string>
     <string name="add">ADD</string>
     <string name="delete">Delete</string>
+    <string name="my_vacations">My Vacations</string>
+    <string name="TODO">FIXME</string>
     <string name="add_vacation">Add Vacation</string>
 </resources>

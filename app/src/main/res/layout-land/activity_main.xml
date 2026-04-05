@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addVacaButton"
+        android:id="@+id/myVacaButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="80dp"
@@ -41,7 +41,7 @@
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addVacaButton"
+        app:layout_constraintStart_toEndOf="@+id/myVacaButton"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
