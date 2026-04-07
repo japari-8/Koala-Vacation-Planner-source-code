@@ -11,12 +11,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.d308vacationplanner.Database.Repository;
 import com.example.d308vacationplanner.Entities.Vacation;
 import com.example.d308vacationplanner.R;
 
 import java.time.LocalDate;
 
 public class MainActivity extends AppCompatActivity {
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 //FIXME: Use following block to test Entities
-                //Vacation testVaca = new Vacation("Hawaii", "Hilton", LocalDate.now(), LocalDate.now());
+                Vacation testVaca = new Vacation(0, "Hawaii", "Hilton", LocalDate.now(), LocalDate.now());
+                try {
+                    repository.addVacation(testVaca);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
 
             }

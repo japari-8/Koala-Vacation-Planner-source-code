@@ -1,19 +1,35 @@
 package com.example.d308vacationplanner.Entities;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDate;
 import java.util.Date;
 
+@Entity(tableName = "Vacations")
 public class Vacation {
+    @PrimaryKey(autoGenerate = true)
+    private long vacationId;
     private String title;
     private String hotel;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Vacation(String title, String hotel, LocalDate startDate, LocalDate endDate) {
+
+    public Vacation(long vacationId, String title, String hotel, LocalDate startDate, LocalDate endDate) {
+        this.vacationId = vacationId;
         this.title = title;
         this.hotel = hotel;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public long getVacationId() {
+        return vacationId;
+    }
+
+    public void setVacationId(long vacationId) {
+        this.vacationId = vacationId;
     }
 
     public String getTitle() {
