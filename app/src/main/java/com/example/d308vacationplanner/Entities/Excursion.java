@@ -1,5 +1,7 @@
 package com.example.d308vacationplanner.Entities;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -8,16 +10,16 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Entity(tableName = "Excursions", foreignKeys = @ForeignKey(entity = Vacation.class, parentColumns = "vacationId", childColumns = "vacationId"))
+@Entity(tableName = "Excursions")
 public class Excursion {
 
     @PrimaryKey(autoGenerate = true)
     private long excursionId;
     private String title;
-    private LocalDate date;
+    private Date date;
     private long vacationId;
 
-    public Excursion(long excursionId, String title, LocalDate date, long vacationId) {
+    public Excursion(long excursionId, String title, Date date, long vacationId) {
         this.excursionId = excursionId;
         this.title = title;
         this.date = date;
@@ -47,11 +49,11 @@ public class Excursion {
         this.title = title;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

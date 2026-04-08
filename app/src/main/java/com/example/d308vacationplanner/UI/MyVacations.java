@@ -11,7 +11,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.d308vacationplanner.Database.Repository;
+import com.example.d308vacationplanner.Entities.Excursion;
 import com.example.d308vacationplanner.R;
+
+import java.util.Date;
 
 public class MyVacations extends AppCompatActivity {
 
@@ -33,7 +37,6 @@ public class MyVacations extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyVacations.this, AddVacation.class);
                 startActivity(intent);
-
 
             }
 

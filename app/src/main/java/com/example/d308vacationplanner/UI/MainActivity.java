@@ -12,10 +12,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.d308vacationplanner.Database.Repository;
+import com.example.d308vacationplanner.Entities.Excursion;
 import com.example.d308vacationplanner.Entities.Vacation;
 import com.example.d308vacationplanner.R;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private Repository repository;
@@ -40,9 +41,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 //FIXME: Use following block to test Entities
-                Vacation testVaca = new Vacation(0, "Hawaii", "Hilton", LocalDate.now(), LocalDate.now());
+                repository = new Repository(getApplication());
+                Date testStartDate = new Date();
+                Date testEndDAte = new Date();
+                Vacation testVaca = new Vacation(0, "Hawaii", "Hilton", testStartDate, testEndDAte);
                 try {
                     repository.addVacation(testVaca);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Date testExcurDate = new Date();
+                Excursion testExcur = new Excursion(0, "Snorkeling", testExcurDate, 0);
+                try {
+                    repository.addExcursion(testExcur);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

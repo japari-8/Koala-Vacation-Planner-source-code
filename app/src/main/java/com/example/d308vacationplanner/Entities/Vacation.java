@@ -12,11 +12,11 @@ public class Vacation {
     private long vacationId;
     private String title;
     private String hotel;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
 
 
-    public Vacation(long vacationId, String title, String hotel, LocalDate startDate, LocalDate endDate) {
+    public Vacation(long vacationId, String title, String hotel, Date startDate, Date endDate) {
         this.vacationId = vacationId;
         this.title = title;
         this.hotel = hotel;
@@ -48,19 +48,19 @@ public class Vacation {
         this.hotel = hotel;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }
