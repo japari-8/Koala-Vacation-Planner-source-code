@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">Vacation Planner</string>
-    <string name="add">ADD</string>
     <string name="delete">Delete</string>
+    <string name="add">ADD</string>
     <string name="my_vacations">My Vacations</string>
     <string name="TODO">FIXME</string>
-    <string name="add_vacation">Add Vacation</string>
+    <string name="vacation_details">Vacation Details</string>
+    <string name="title">Title: </string>
+    <string name="vacation_name">vacation name</string>
+    <string name="hotel">Hotel: </string>
+    <string name="accommodations">accommodations</string>
+    <string name="start_date">Start Date: </string>
+    <string name="st_date">start date</string>
+    <string name="end_date">End date: </string>
+    <string name="e_date">end date</string>
+    <string name="time_to_unwind">Time To Unwind!</string>
+    <string name="save">Save</string>
+    <string name="no_vacations">No Vacations</string>
+    <string name="no_excursions">No Excursions</string>
+    <string name="no_excursion_id">No Excursion ID</string>
+
 </resources>

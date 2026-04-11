@@ -1,9 +1,6 @@
 package com.example.d308vacationplanner.UI;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,48 +11,39 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.d308vacationplanner.Database.Repository;
-import com.example.d308vacationplanner.Entities.Vacation;
+import com.example.d308vacationplanner.Entities.Excursion;
 import com.example.d308vacationplanner.R;
 
 import java.util.List;
 
-public class MyVacations extends AppCompatActivity {
+public class VacationDetails extends AppCompatActivity {
+    Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_my_vacations);
+        setContentView(R.layout.activity_vacation_details);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        Button button = findViewById(R.id.addVacaButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
+        repository = new Repository(getApplication());
+        List<Excursion> allExcursions;
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyVacations.this, VacationDetails.class);
-                startActivity(intent);
-
-            }
-
-        });
-
-        RecyclerView recyclerView = findViewById(R.id.vacationRecyclerview);
-        Repository repository = new Repository(getApplication());
-        List<Vacation> allVacations;
         try {
-            allVacations = repository.getmListVacations();
+            allExcursions = repository.getmListExcursions();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        final VacationAdapter vacationAdapter = new VacationAdapter(this);
-        recyclerView.setAdapter(vacationAdapter);
+
+        final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
+        recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        vacationAdapter.setVacations(allVacations);
+        excursionAdapter.setmExcursions(allExcursions);
 
     }
 }

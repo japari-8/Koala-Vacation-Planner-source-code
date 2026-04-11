@@ -14,15 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.D308VacationPlanner">
         <activity
+            android:name=".UI.ExcursionDetails"
+            android:exported="false" />
+        <activity
             android:name=".UI.MyVacations"
             android:exported="false"
-            android:label="@string/my_vacations"
-            android:parentActivityName=".UI.MainActivity"/>
+            android:parentActivityName=".UI.MainActivity" />
         <activity
-            android:name=".UI.AddVacation"
+            android:name=".UI.VacationDetails"
             android:exported="false"
-            android:label="@string/add_vacation"
-            android:parentActivityName=".UI.MyVacations"/>
+            android:parentActivityName=".UI.MyVacations" />
         <activity
             android:name=".UI.MainActivity"
             android:exported="true">

@@ -32,6 +32,26 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
+//                repository = new Repository(getApplication());
+//                Date testStartDate = new Date();
+//                Date testEndDate = new Date();
+//
+//                Vacation testVaca2 = new Vacation(0, "Italy", "BonVoy", testStartDate, testEndDate);
+//                try {
+//                    repository.addVacation(testVaca2);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                Date testExcurDate2 = new Date();
+//                Excursion testExcur2 = new Excursion(0, "Boat ride", testExcurDate2, 0);
+//                try {
+//                    repository.addExcursion(testExcur2);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+
+
         Button button = findViewById(R.id.myVacaButton);
         button.setOnClickListener(new View.OnClickListener(){
 
@@ -40,24 +60,44 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MyVacations.class);
                 startActivity(intent);
 
-                //FIXME: Use following block to test Entities
-                repository = new Repository(getApplication());
-                Date testStartDate = new Date();
-                Date testEndDAte = new Date();
-                Vacation testVaca = new Vacation(0, "Hawaii", "Hilton", testStartDate, testEndDAte);
-                try {
-                    repository.addVacation(testVaca);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                //FIXME: Use following block to test data added to database. Delete after test.
+//                repository = new Repository(getApplication());
+//                Date testStartDate = new Date();
+//                Date testEndDate = new Date();
 
-                Date testExcurDate = new Date();
-                Excursion testExcur = new Excursion(0, "Snorkeling", testExcurDate, 0);
-                try {
-                    repository.addExcursion(testExcur);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+//                Vacation testVaca1 = new Vacation(0, "Hawaii", "Hilton", testStartDate, testEndDate);
+//                try {
+//                    repository.addVacation(testVaca1);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                Date testExcurDate1 = new Date();
+//                Excursion testExcur1 = new Excursion(0, "Snorkeling", testExcurDate1, 0);
+//                try {
+//                    repository.addExcursion(testExcur1);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+
+
+//                repository = new Repository(getApplication());
+//                Date testStartDate = new Date();
+//                Date testEndDate = new Date();
+
+//                Vacation testVaca2 = new Vacation(0, "Italy", "BonVoy", testStartDate, testEndDate);
+//                try {
+//                    repository.addVacation(testVaca2);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                Date testExcurDate2 = new Date();
+//                Excursion testExcur2 = new Excursion(0, "Boat ride", testExcurDate2, 0);
+//                try {
+//                    repository.addExcursion(testExcur2);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+
 
 
             }
