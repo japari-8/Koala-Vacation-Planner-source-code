@@ -32,26 +32,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
-//                repository = new Repository(getApplication());
-//                Date testStartDate = new Date();
-//                Date testEndDate = new Date();
-//
-//                Vacation testVaca2 = new Vacation(0, "Italy", "BonVoy", testStartDate, testEndDate);
-//                try {
-//                    repository.addVacation(testVaca2);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                Date testExcurDate2 = new Date();
-//                Excursion testExcur2 = new Excursion(0, "Boat ride", testExcurDate2, 0);
-//                try {
-//                    repository.addExcursion(testExcur2);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-
-
         Button button = findViewById(R.id.myVacaButton);
         button.setOnClickListener(new View.OnClickListener(){
 
@@ -83,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //                repository = new Repository(getApplication());
 //                Date testStartDate = new Date();
 //                Date testEndDate = new Date();
-
+//
 //                Vacation testVaca2 = new Vacation(0, "Italy", "BonVoy", testStartDate, testEndDate);
 //                try {
 //                    repository.addVacation(testVaca2);
@@ -91,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 //                    throw new RuntimeException(e);
 //                }
 //                Date testExcurDate2 = new Date();
-//                Excursion testExcur2 = new Excursion(0, "Boat ride", testExcurDate2, 0);
+//                Excursion testExcur2 = new Excursion(0, "Boat ride", testExcurDate2, 1);
 //                try {
 //                    repository.addExcursion(testExcur2);
 //                } catch (InterruptedException e) {

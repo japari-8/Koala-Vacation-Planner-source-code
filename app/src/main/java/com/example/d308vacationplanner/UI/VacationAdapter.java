@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.d308vacationplanner.Entities.Vacation;
 import com.example.d308vacationplanner.R;
 
 import java.util.List;
+import java.util.Locale;
 
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder> {
     private List<Vacation> mVacations;
@@ -42,8 +44,9 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
                     intent.putExtra("vacationId", current.getVacationId());
                     intent.putExtra("title", current.getTitle());
                     intent.putExtra("hotel", current.getHotel());
-                    intent.putExtra("startDate", current.getStartDate());
-                    intent.putExtra("endDate", current.getEndDate());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                    intent.putExtra("startDate", simpleDateFormat.format(current.getStartDate()));
+                    intent.putExtra("endDate", simpleDateFormat.format(current.getEndDate()));
                     context.startActivity(intent);
                 }
             });

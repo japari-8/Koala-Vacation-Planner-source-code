@@ -58,4 +58,22 @@ public class MyVacations extends AppCompatActivity {
         vacationAdapter.setVacations(allVacations);
 
     }
+
+    protected void onResume() {
+
+        super.onResume();
+        RecyclerView recyclerView = findViewById(R.id.vacationRecyclerview);
+        Repository repository = new Repository(getApplication());
+        List<Vacation> allVacations;
+        try {
+            allVacations = repository.getmListVacations();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+        recyclerView.setAdapter(vacationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationAdapter.setVacations(allVacations);
+
+    }
 }

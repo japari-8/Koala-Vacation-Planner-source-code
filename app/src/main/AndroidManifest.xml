@@ -15,7 +15,8 @@
         android:theme="@style/Theme.D308VacationPlanner">
         <activity
             android:name=".UI.ExcursionDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".UI.VacationDetails" />
         <activity
             android:name=".UI.MyVacations"
             android:exported="false"
