@@ -3,10 +3,13 @@ package com.example.d308vacationplanner.UI;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +48,8 @@ public class VacationDetails extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener pickEndDate;
     final Calendar mCalender = Calendar.getInstance();
 
-    DateString dateString;
+    DateString dateString1;
+    DateString dateString2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,7 @@ public class VacationDetails extends AppCompatActivity {
         vacationTitle = getIntent().getStringExtra("title");
         vacationHotel = getIntent().getStringExtra("hotel");
         vacationStDAte = getIntent().getStringExtra("startDate");
-        vacationEndDate = getIntent().getStringExtra("startDate");
+        vacationEndDate = getIntent().getStringExtra("endDate");
 
         editTitle.setText(vacationTitle);
         editHotel.setText(vacationHotel);
@@ -80,12 +84,14 @@ public class VacationDetails extends AppCompatActivity {
         editEndDate.setFocusable(false);
         editEndDate.setClickable(true);
 
+
+        // RecyclerView with a list of Excursions
         RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
         repository = new Repository(getApplication());
         List<Excursion> allExcursions;
 
         try {
-            allExcursions = repository.getmListExcursions();
+            allExcursions = repository.getmListAssociatedExcursions(vacationId);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -96,6 +102,7 @@ public class VacationDetails extends AppCompatActivity {
         excursionAdapter.setmExcursions(allExcursions);
 
 
+        // Create DatePicker for Vacation Start and end dates.
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         if(vacationId == -1) {
             String currentDate = sdf.format(new Date());
@@ -170,6 +177,7 @@ public class VacationDetails extends AppCompatActivity {
         };
 
 
+        // These 2 statements and method are called when the Save button is clicked.
         Button saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,9 +186,10 @@ public class VacationDetails extends AppCompatActivity {
                 Date dateSt;
                 Date dateEd;
                 try {
-                    dateString = new DateString();
-                    dateSt = dateString.stringToDate(editStartDate.getText().toString());
-                    dateEd = dateString.stringToDate(editEndDate.getText().toString());
+                    dateString1 = new DateString();
+                    dateSt = dateString1.stringToDate(editStartDate.getText().toString());
+                    dateString2 = new DateString();
+                    dateEd = dateString2.stringToDate(editEndDate.getText().toString());
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -259,6 +268,59 @@ public class VacationDetails extends AppCompatActivity {
     private void updateStDate(EditText editText){
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         editText.setText(sdf.format(mCalender.getTime()));
+    }
+
+
+    // This method creates an Actions bar menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_vacation_details, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == android.R.id.home){
+            finish();
+            return  true;
+        }
+
+        if(item.getItemId() == R.id.deletevacation) {
+            Vacation vacation;
+            Date dateSt;
+            Date dateEd;
+            try {
+                dateString1 = new DateString();
+                dateSt = dateString1.stringToDate(editStartDate.getText().toString());
+                dateString2 = new DateString();
+                dateEd = dateString2.stringToDate(editEndDate.getText().toString());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            List<Excursion> allAssociatedExcursions;
+            try {
+                allAssociatedExcursions = repository.getmListAssociatedExcursions(vacationId);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(allAssociatedExcursions.isEmpty()){
+                vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
+                try {
+                    repository.deleteVacation(vacation);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Toast.makeText(VacationDetails.this, editTitle.getText().toString() + " was deleted", Toast.LENGTH_LONG).show();
+                this.finish();
+            }
+            else {
+                Toast.makeText(VacationDetails.this, "Can't delete a Vacation with excursions", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        return true;
+
     }
 
 }

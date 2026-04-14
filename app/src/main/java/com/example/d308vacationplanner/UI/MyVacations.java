@@ -2,8 +2,11 @@ package com.example.d308vacationplanner.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,16 +23,24 @@ import com.example.d308vacationplanner.R;
 import java.util.List;
 
 public class MyVacations extends AppCompatActivity {
+    Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_my_vacations);
+
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
 
         Button button = findViewById(R.id.addVacaButton);
@@ -59,8 +70,30 @@ public class MyVacations extends AppCompatActivity {
 
     }
 
-    protected void onResume() {
+    // This method creates an Actions bar menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_my_vacations, menu);
+        return true;
+    }
 
+    // This method handles the back button manually.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            finish();
+            return  true;
+        }
+
+        if(id == R.id.sample){}
+            //Toast.makeText(MyVacations.this, "This will delete a vacation", Toast.LENGTH_LONG).show();
+            //repository.deleteVacation();
+        return true;
+    }
+
+    protected void onResume() {
         super.onResume();
         RecyclerView recyclerView = findViewById(R.id.vacationRecyclerview);
         Repository repository = new Repository(getApplication());
