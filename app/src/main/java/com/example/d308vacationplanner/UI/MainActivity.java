@@ -19,6 +19,7 @@ import com.example.d308vacationplanner.R;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    public static int numAlert;
     private Repository repository;
 
     @Override

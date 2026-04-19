@@ -1,8 +1,12 @@
 package com.example.d308vacationplanner.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,9 +51,10 @@ public class VacationDetails extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener pickStDate;
     DatePickerDialog.OnDateSetListener pickEndDate;
     final Calendar mCalender = Calendar.getInstance();
-
     DateString dateString1;
     DateString dateString2;
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +72,6 @@ public class VacationDetails extends AppCompatActivity {
         editStartDate = findViewById(R.id.vacationstartdate);
         editEndDate = findViewById(R.id.vacationenddate);
 
-
-
         vacationId = getIntent().getLongExtra("vacationId", -1);
         vacationTitle = getIntent().getStringExtra("title");
         vacationHotel = getIntent().getStringExtra("hotel");
@@ -83,7 +86,6 @@ public class VacationDetails extends AppCompatActivity {
         editEndDate.setText(vacationEndDate);
         editEndDate.setFocusable(false);
         editEndDate.setClickable(true);
-
 
         // RecyclerView with a list of Excursions
         RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
@@ -101,16 +103,13 @@ public class VacationDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         excursionAdapter.setmExcursions(allExcursions);
 
-
-        // Create DatePicker for Vacation Start and end dates.
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
-        if(vacationId == -1) {
+        if (vacationId == -1) {
             String currentDate = sdf.format(new Date());
             editStartDate.setText(currentDate);
         }
 
-        editStartDate.setOnClickListener(new View.OnClickListener(){
-
+        // This method creates a datePicker for a vacation start date.
+        editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String info = editStartDate.getText().toString();
@@ -128,25 +127,25 @@ public class VacationDetails extends AppCompatActivity {
 
         });
 
-        pickStDate = new DatePickerDialog.OnDateSetListener(){
+        pickStDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 mCalender.set(Calendar.YEAR, year);
                 mCalender.set(Calendar.MONTH, month);
                 mCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                updateStDate(editStartDate);
+                updateDate(editStartDate);
 
             }
         };
 
-        if(vacationId == -1) {
+        if (vacationId == -1) {
             String currentDate = sdf.format(new Date());
             editEndDate.setText(currentDate);
         }
 
-        editEndDate.setOnClickListener(new View.OnClickListener(){
-
+        // This method creates a datePicker for a vacation End date.
+        editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String info = editEndDate.getText().toString();
@@ -164,20 +163,21 @@ public class VacationDetails extends AppCompatActivity {
 
         });
 
-        pickEndDate = new DatePickerDialog.OnDateSetListener(){
+        pickEndDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 mCalender.set(Calendar.YEAR, year);
                 mCalender.set(Calendar.MONTH, month);
                 mCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                updateStDate(editEndDate);
+                updateDate(editEndDate);
 
             }
         };
 
 
-        // These 2 statements and method are called when the Save button is clicked.
+        // This method is called when the Save button is clicked. This method adds or updates a vacation.
+        // It also checks if the end date is after the start date.
         Button saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,82 +194,52 @@ public class VacationDetails extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                if (vacationId == -1){
-
-                    try {
-                        if (repository.getmListVacations().isEmpty()) {
-                            vacationId = (long) 1;
-                        }
-                        else {
-                            vacationId = repository.getmListVacations().get(repository.getmListVacations().size() - 1).getVacationId() + 1;
-                        }
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
-                    try {
-                        repository.addVacation(vacation);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    finish();
+                if(dateSt.after(dateEd)) {
+                    Toast.makeText(VacationDetails.this, "The End date cannot be before the " +
+                            "Start date", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
-                    try {
-                        repository.updateVacation(vacation);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+
+                    if (vacationId == -1) {
+                        try {
+                            if (repository.getmListVacations().isEmpty()) {
+                                vacationId = (long) 1;
+                            } else {
+                                vacationId = repository.getmListVacations().get(repository.getmListVacations().size() - 1).getVacationId() + 1;
+                            }
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
+                        try {
+                            repository.addVacation(vacation);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        finish();
                     }
-                    finish();
+                    else {
+                        vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
+                        try {
+                            repository.updateVacation(vacation);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        finish();
+                    }
                 }
-
-
-//                try {
-//                    dateSt = dateString.stringToDate(editStartDate.getText().toString());
-//                } catch (ParseException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//                try {
-//                    dateEd = dateString.stringToDate(editEndDate.getText().toString());
-//                } catch (ParseException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//                if (vacationId == -1) {
-//                    vacationId = (long) 0;
-//
-//                    vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
-//                    try {
-//                        repository.addVacation(vacation);
-//
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//                else {
-//                    vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
-//                    try {
-//                        repository.updateVacation(vacation);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//                Intent intent = new Intent(VacationDetails.this, MyVacations.class);
-//                startActivity(intent);
             }
 
         });
 
     }
 
-    private void updateStDate(EditText editText){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+
+    // This method is used to set startDate and endDate on the screen from the datePicker.
+    private void updateDate(EditText editText){
+//        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         editText.setText(sdf.format(mCalender.getTime()));
     }
-
 
     // This method creates an Actions bar menu.
     @Override
@@ -277,26 +247,40 @@ public class VacationDetails extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_vacation_details, menu);
         return true;
     }
+
+
+    // This method has menu items to delete and set Alerts.
+    // It also handles the back button manually.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == android.R.id.home){
+
+        if (item.getItemId() == android.R.id.home){
             finish();
             return  true;
         }
 
-        if(item.getItemId() == R.id.deletevacation) {
-            Vacation vacation;
-            Date dateSt;
-            Date dateEd;
-            try {
-                dateString1 = new DateString();
-                dateSt = dateString1.stringToDate(editStartDate.getText().toString());
-                dateString2 = new DateString();
-                dateEd = dateString2.stringToDate(editEndDate.getText().toString());
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
 
+        Date dateSt;
+        Date dateEd;
+        try {
+            dateString1 = new DateString();
+            dateSt = dateString1.stringToDate(editStartDate.getText().toString());
+            dateString2 = new DateString();
+            dateEd = dateString2.stringToDate(editEndDate.getText().toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (item.getItemId() == R.id.setalertsV) {
+            scheduleAlert(dateSt.getTime(), editTitle.getText().toString() + "vacation is starting");
+            scheduleAlert(dateEd.getTime(), editTitle.getText().toString() + "Vacation is ending");
+
+            return true;
+        }
+
+
+        if (item.getItemId() == R.id.deletevacation) {
+            Vacation vacation;
             List<Excursion> allAssociatedExcursions;
             try {
                 allAssociatedExcursions = repository.getmListAssociatedExcursions(vacationId);
@@ -317,10 +301,58 @@ public class VacationDetails extends AppCompatActivity {
             else {
                 Toast.makeText(VacationDetails.this, "Can't delete a Vacation with excursions", Toast.LENGTH_LONG).show();
             }
-
         }
-        return true;
 
+
+        if (item.getItemId() == R.id.sharevacation) {
+            String shareMessage = editTitle.getText().toString() + " vacation. " + "Staying at " +
+                    editHotel.getText().toString() + ". From " + editStartDate.getText().toString() +
+                    " to " + editEndDate.getText().toString();
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TITLE, "Vacation: " + editTitle.getText().toString());
+            sendIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            sendIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+            return true;
+        }
+
+        return true;
+    }
+
+
+    // This method is called to schedule Alerts for start and end dates.
+    private void scheduleAlert(Long trigger, String st){
+        Date dateSt;
+        Date dateEd;
+        try {
+            dateString1 = new DateString();
+            dateSt = dateString1.stringToDate(editStartDate.getText().toString());
+            dateString2 = new DateString();
+            dateEd = dateString2.stringToDate(editEndDate.getText().toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        Date currDate = new Date();
+        String stCurrDate = sdf.format(currDate);
+        try {
+            currDate = sdf.parse(stCurrDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (dateSt.before(currDate) || dateEd.before(currDate) ) {
+            Toast.makeText(VacationDetails.this, "Start or end date is in the past", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intent = new Intent(VacationDetails.this, MyReceiver.class);
+        intent.putExtra("key", st);
+        PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this,
+                ++MainActivity.numAlert, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
     }
 
 }
