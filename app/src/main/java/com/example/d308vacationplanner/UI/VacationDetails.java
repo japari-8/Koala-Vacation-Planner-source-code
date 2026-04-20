@@ -28,6 +28,7 @@ import com.example.d308vacationplanner.Database.Repository;
 import com.example.d308vacationplanner.Entities.Excursion;
 import com.example.d308vacationplanner.Entities.Vacation;
 import com.example.d308vacationplanner.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -103,6 +104,15 @@ public class VacationDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         excursionAdapter.setmExcursions(allExcursions);
 
+        FloatingActionButton fab = findViewById(R.id.excursionFab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
+                startActivity(intent);
+            }
+        });
+
         if (vacationId == -1) {
             String currentDate = sdf.format(new Date());
             editStartDate.setText(currentDate);
@@ -122,7 +132,6 @@ public class VacationDetails extends AppCompatActivity {
 
                 new DatePickerDialog(VacationDetails.this, pickStDate, mCalender.get(Calendar.YEAR),
                         mCalender.get(Calendar.MONTH), mCalender.get(Calendar.DAY_OF_MONTH)).show();
-
             }
 
         });
@@ -237,7 +246,6 @@ public class VacationDetails extends AppCompatActivity {
 
     // This method is used to set startDate and endDate on the screen from the datePicker.
     private void updateDate(EditText editText){
-//        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         editText.setText(sdf.format(mCalender.getTime()));
     }
 
@@ -354,5 +362,22 @@ public class VacationDetails extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
     }
+
+//    protected void onResume() {
+//        super.onResume();
+//        RecyclerView recyclerView = findViewById(R.id.vacationRecyclerview);
+//        Repository repository = new Repository(getApplication());
+//        List<Vacation> allVacations;
+//        try {
+//            allVacations = repository.getmListVacations();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+//        recyclerView.setAdapter(vacationAdapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        vacationAdapter.setVacations(allVacations);
+//
+//    }
 
 }

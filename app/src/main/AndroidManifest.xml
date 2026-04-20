@@ -23,13 +23,14 @@
             android:exported="false"
             android:parentActivityName=".UI.VacationDetails" />
         <activity
+            android:name=".UI.VacationDetails"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false"
+            android:parentActivityName=".UI.MyVacations" />
+        <activity
             android:name=".UI.MyVacations"
             android:exported="false"
             android:parentActivityName=".UI.MainActivity" />
-        <activity
-            android:name=".UI.VacationDetails"
-            android:exported="false"
-            android:parentActivityName=".UI.MyVacations" />
         <activity
             android:name=".UI.MainActivity"
             android:exported="true">

@@ -20,5 +20,9 @@
     <string name="no_excursion_id">No Excursion ID</string>
     <string name="set_alerts">Set Alerts</string>
     <string name="share_vacation">Share Vacation</string>
+    <string name="excursion_name">excursion name</string>
+    <string name="date">Date</string>
+    <string name="date_of_excursion">date of excursion</string>
+    <string name="excursions">Excursions</string>
 
 </resources>
