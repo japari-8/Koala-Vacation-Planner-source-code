@@ -15,6 +15,7 @@ public class Repository {
     private VacationDAO mVacationDAO;
     private ExcursionDAO mExcursionDAO;
     private List<Vacation> mListVacations;
+    private Vacation mVacation;
     private List<Excursion> mListExcursions;
 
     private static int NUMBER_OF_THREADS = 4;
@@ -37,8 +38,19 @@ public class Repository {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
         return mListVacations;
+    }
+
+    public Vacation getVacationById(long vacationId) throws InterruptedException {
+        databaseExecutor.execute(()->{
+            mVacation = mVacationDAO.getSelectedVacation(vacationId);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return mVacation;
     }
 
     public void addVacation(Vacation vacation) throws InterruptedException {

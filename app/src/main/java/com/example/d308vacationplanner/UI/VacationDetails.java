@@ -333,7 +333,7 @@ public class VacationDetails extends AppCompatActivity {
 
 
     // This method is called to schedule Alerts for start and end dates.
-    private void scheduleAlert(Long trigger, String st){
+    private void scheduleAlert(Long trigger, String st) {
         Date dateSt;
         Date dateEd;
         try {
