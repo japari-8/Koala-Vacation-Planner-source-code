@@ -41,6 +41,7 @@ public class Excursion {
     public void setVacationId(long vacationId) {
         this.vacationId = vacationId;
     }
+
     public String getTitle() {
         return title;
     }

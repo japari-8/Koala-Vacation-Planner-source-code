@@ -1,5 +1,7 @@
 package com.example.d308vacationplanner.UI;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -92,23 +94,23 @@ public class VacationDetails extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
         repository = new Repository(getApplication());
         List<Excursion> allExcursions;
-
         try {
             allExcursions = repository.getmListAssociatedExcursions(vacationId);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
         final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         excursionAdapter.setmExcursions(allExcursions);
+
 
         FloatingActionButton fab = findViewById(R.id.excursionFab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
+                intent.putExtra("associatedVacationId", vacationId);
                 startActivity(intent);
             }
         });
@@ -363,21 +365,25 @@ public class VacationDetails extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
     }
 
-//    protected void onResume() {
-//        super.onResume();
-//        RecyclerView recyclerView = findViewById(R.id.vacationRecyclerview);
-//        Repository repository = new Repository(getApplication());
-//        List<Vacation> allVacations;
-//        try {
-//            allVacations = repository.getmListVacations();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        final VacationAdapter vacationAdapter = new VacationAdapter(this);
-//        recyclerView.setAdapter(vacationAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        vacationAdapter.setVacations(allVacations);
-//
-//    }
+
+    protected void onResume() {
+        super.onResume();
+        RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
+        repository = new Repository(getApplication());
+        List<Excursion> allExcursions;
+        try {
+            allExcursions = repository.getmListAssociatedExcursions(vacationId);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
+        recyclerView.setAdapter(excursionAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        excursionAdapter.setmExcursions(allExcursions);
+
+        //Log.d(TAG, "vacationIdExDet " + vacationId);
+
+    }
+
 
 }

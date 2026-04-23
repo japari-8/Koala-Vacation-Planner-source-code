@@ -1,17 +1,29 @@
 package com.example.d308vacationplanner.UI;
 
+import static android.content.ContentValues.TAG;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+
+import android.app.Application;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.d308vacationplanner.Database.Repository;
+import com.example.d308vacationplanner.Entities.Excursion;
 import com.example.d308vacationplanner.R;
 
 import java.text.ParseException;
@@ -26,8 +38,10 @@ public class ExcursionDetails extends AppCompatActivity {
     EditText editDate;
     Long excursionId;
     Long vacationIdEx;
+    Long assocVacationId;
     String excursionTitle;
     String excursionDate;
+    Repository repository;
     DatePickerDialog.OnDateSetListener pickDate;
     final Calendar mCalender = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
@@ -44,6 +58,8 @@ public class ExcursionDetails extends AppCompatActivity {
             return insets;
         });
 
+        //Excursion excursion;
+
         editTitle = findViewById(R.id.excursiontitle);
         editDate = findViewById(R.id.excursiondate);
 
@@ -51,6 +67,10 @@ public class ExcursionDetails extends AppCompatActivity {
         excursionTitle = getIntent().getStringExtra("title");
         excursionDate = getIntent().getStringExtra("date");
         vacationIdEx = getIntent().getLongExtra("vacationId", -1);
+
+        assocVacationId = getIntent().getLongExtra("associatedVacationId", -1);
+
+        //Log.d(TAG, "assocVacaIdFromVcaDetFab " + assocVacationId);
 
         editTitle.setText(excursionTitle);
         editDate.setText(excursionDate);
@@ -89,9 +109,87 @@ public class ExcursionDetails extends AppCompatActivity {
             }
         };
 
+
+
+          //FIXME: When save is clicked, return to VacationDetails activity
+        Button saveButton = findViewById(R.id.saveButtonEx);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Excursion excursion;
+                Date exDate;
+                try {
+                    exDate = sdf.parse(editDate.getText().toString());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Log.d(TAG, "AddExId " + excursionId);
+                Log.d(TAG, "AddExtitle " + editTitle.getText().toString());
+                Log.d(TAG, "AddExdate " + exDate);
+                Log.d(TAG, "AddExVacaId " + vacationIdEx);
+
+                if(excursionId == -1) {
+                    final Excursion excursion = new Excursion(0, editTitle.getText().toString(), exDate, assocVacationId);
+                    try {
+                        repository = new Repository(getApplication());
+                        repository.addExcursion(excursion);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    finish();
+                }
+
+                else {
+                    final Excursion excursion = new Excursion(excursionId, editTitle.getText().toString(), exDate, vacationIdEx);
+                    try {
+                        repository = new Repository(getApplication());
+                        repository.updateExcursion(excursion);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    finish();
+                }
+
+            }
+
+        });
+
     }
 
     private void updateDate(EditText editText){
         editText.setText(sdf.format(mCalender.getTime()));
+    }
+
+     //This method creates an Actions bar menu.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_excursion_details, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Date excursionDate;
+        try {
+            excursionDate = sdf.parse(editDate.getText().toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (item.getItemId() == android.R.id.home){
+            finish();
+            return  true;
+        }
+
+        if (item.getItemId() == R.id.deleteExcursion) {
+            Excursion excursion;
+            excursion = new Excursion(excursionId, editTitle.getText().toString(), excursionDate, vacationIdEx);
+            try {
+                repository.deleteExcursion(excursion);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    return true;
     }
 }
