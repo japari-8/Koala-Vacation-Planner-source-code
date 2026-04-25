@@ -1,9 +1,9 @@
 package com.example.d308vacationplanner.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity(tableName = "Vacations")
@@ -26,6 +26,10 @@ public class Vacation {
 
     public long getVacationId() {
         return vacationId;
+    }
+
+    public String toString() {
+        return title;
     }
 
     public void setVacationId(long vacationId) {

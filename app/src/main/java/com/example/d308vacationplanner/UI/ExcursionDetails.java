@@ -1,26 +1,22 @@
 package com.example.d308vacationplanner.UI;
 
-import static android.content.ContentValues.TAG;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -33,8 +29,10 @@ import com.example.d308vacationplanner.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -50,7 +48,8 @@ public class ExcursionDetails extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener pickDate;
     final Calendar mCalender = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
-
+    Spinner spinner;
+    Vacation currentVacation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +72,10 @@ public class ExcursionDetails extends AppCompatActivity {
         excursionDate = getIntent().getStringExtra("date");
         vacationIdEx = getIntent().getLongExtra("vacationId", -1);
 
+        //assocVacationId
         assocVacationId = getIntent().getLongExtra("associatedVacationId", -1);
 
-        //Log.d(TAG, "assocVacaIdFromVcaDetFab " + assocVacationId);
+        //Log.d(TAG, "assocVacaIdFromRecyclerOrFab " + vacationIdEx);
 
         editTitle.setText(excursionTitle);
         editDate.setText(excursionDate);
@@ -114,11 +114,42 @@ public class ExcursionDetails extends AppCompatActivity {
             }
         };
 
+        ArrayList<Vacation> vacationArrayList;
+        repository = new Repository(getApplication());
+        try {
+            List<Vacation> databaseVacationList = repository.getmListVacations();
+            vacationArrayList = new ArrayList<>(databaseVacationList);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter<Vacation> vacationIdAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, vacationArrayList);
+
+        spinner.setAdapter(vacationIdAdapter);
+
+        for (Vacation vaca : vacationArrayList) {
+            if((vaca.getVacationId() == vacationIdEx) || (vaca.getVacationId() == assocVacationId))
+                currentVacation = vaca;
+        }
+        spinner.setSelection(vacationIdAdapter.getPosition(currentVacation));
+
 
         Button saveButton = findViewById(R.id.saveButtonEx);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                try {
+                    for(Vacation vacat: repository.getmListVacations()) {
+                        if (vacat.getTitle().equals(spinner.getSelectedItem().toString()))
+                            currentVacation = vacat;
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
                 Date exDate;
                 try {
                     exDate = sdf.parse(editDate.getText().toString());
@@ -126,26 +157,24 @@ public class ExcursionDetails extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                Vacation vacation;
-                if (excursionId == -1) {
-                    try {
-                        repository = new Repository(getApplication());
-                        vacation = repository.getVacationById(assocVacationId);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else {
-                    try {
-                        repository = new Repository(getApplication());
-                        vacation = repository.getVacationById(vacationIdEx);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                Date vacationStDate = vacation.getStartDate();
-                Date vacationSEdDate = vacation.getEndDate();
-
+//                Vacation vacation;
+//                if (excursionId == -1) {
+//                    try {
+//                        repository = new Repository(getApplication());
+//                        vacation = repository.getVacationById(assocVacationId);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                } else {
+//                    try {
+//                        repository = new Repository(getApplication());
+//                        vacation = repository.getVacationById(vacationIdEx);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+                Date vacationStDate = currentVacation.getStartDate();
+                Date vacationSEdDate = currentVacation.getEndDate();
                 assert exDate != null;
                 if (exDate.before(vacationStDate) || (exDate.after(vacationSEdDate))) {
                     Toast.makeText(ExcursionDetails.this, "This date must be during the vacation dates", Toast.LENGTH_LONG).show();
@@ -155,10 +184,9 @@ public class ExcursionDetails extends AppCompatActivity {
 //                Log.d(TAG, "MYvacationEdDate " + vacationSEdDate);
 //                Log.d(TAG, "MYexcursionEdDate " + exDate);
 
-
                 else {
                     if (excursionId == -1) {
-                        Excursion excursion = new Excursion(0, editTitle.getText().toString(), exDate, assocVacationId);
+                        Excursion excursion = new Excursion(0, editTitle.getText().toString(), exDate, currentVacation.getVacationId());
                         try {
                             repository = new Repository(getApplication());
                             repository.addExcursion(excursion);
@@ -167,7 +195,7 @@ public class ExcursionDetails extends AppCompatActivity {
                         }
                         finish();
                     } else {
-                        Excursion excursion = new Excursion(excursionId, editTitle.getText().toString(), exDate, vacationIdEx);
+                        Excursion excursion = new Excursion(excursionId, editTitle.getText().toString(), exDate, currentVacation.getVacationId());
                         try {
                             repository = new Repository(getApplication());
                             repository.updateExcursion(excursion);
