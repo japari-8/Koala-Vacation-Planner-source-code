@@ -22,6 +22,7 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
     private List<Excursion> mExcursions;
     private final Context context;
     private final LayoutInflater mInflator;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
 
     public ExcursionAdapter(Context context){
         mInflator = LayoutInflater.from(context);
@@ -44,7 +45,6 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                     Intent intent = new Intent(context, ExcursionDetails.class);
                     intent.putExtra("excursionId", current.getExcursionId());
                     intent.putExtra("title", current.getTitle());
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
                     intent.putExtra("date", simpleDateFormat.format(current.getDate()));
                     intent.putExtra("vacationId", current.getVacationId());
                     context.startActivity(intent);
@@ -65,9 +65,10 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         if (mExcursions != null){
             Excursion current = mExcursions.get(position);
             String name = current.getTitle();
-            long vacationId = current.getVacationId();
+            String date = simpleDateFormat.format(current.getDate());
+            //long vacationId = current.getVacationId();
             holder.excursionItemView.setText(name);
-            holder.excursionItemView2.setText(Long.toString(vacationId));
+            holder.excursionItemView2.setText(date);
         }
         else {
             holder.excursionItemView.setText(R.string.no_excursions);

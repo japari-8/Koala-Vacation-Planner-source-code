@@ -14,27 +14,26 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="#343468"
         android:textStyle="bold"
-        android:layout_marginTop="45dp"
+        app:layout_constraintVertical_bias="0.1"
         android:text="@string/vacation_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!--        app:layout_constraintTBottom_toBottomOf="parent"/>-->
+
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="409dp"
-        android:layout_height="320dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="340dp"
+        android:layout_height="255dp"
+        android:layout_marginStart="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview6"
-        >
+        app:layout_constraintTop_toBottomOf="@id/textview6">
 
         <LinearLayout
             android:id="@+id/primLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:orientation="vertical">
@@ -115,62 +114,63 @@
                     android:inputType="date" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="@string/save"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/scrollView"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="10dp"/>
+            <!--            <View-->
+            <!--                android:layout_width="400dp"-->
+            <!--                android:layout_height="10dp"-->
+            <!--                android:background="#cbccc9"-->
+            <!--                android:layout_marginTop="10dp"-->
 
-<!--            <View-->
-<!--                android:layout_width="400dp"-->
-<!--                android:layout_height="10dp"-->
-<!--                android:background="#cbccc9"-->
-<!--                android:layout_marginTop="10dp"-->
-
-<!--                />-->
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/excursions"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="30dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            <!--                />-->
 
         </LinearLayout>
     </ScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/excursionRecyclerview"
-        android:layout_width="409dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
         android:background="#eaddfc"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="450dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"/>
-<!--        app:layout_constraintTBottom_toBottomOf="parent"/>-->
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.496" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/excursionFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="75dp"
         android:clickable="true"
         android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/outline_add_24" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+
+        android:text="@string/excursions"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toTopOf="@+id/excursionRecyclerview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.743"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

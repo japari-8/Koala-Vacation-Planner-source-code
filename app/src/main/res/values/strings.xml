@@ -25,5 +25,7 @@
     <string name="date_of_excursion">date of excursion</string>
     <string name="excursions">Excursions</string>
     <string name="delete_excursion">Delete Excursion</string>
+    <string name="excursion_details">Excursion Details</string>
+    <string name="choose_vacation_associated_with_excursion">Choose vacation associated with this excursion</string>
 
 </resources>

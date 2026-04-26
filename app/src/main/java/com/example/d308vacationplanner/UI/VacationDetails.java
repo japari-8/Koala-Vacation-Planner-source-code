@@ -315,9 +315,9 @@ public class VacationDetails extends AppCompatActivity {
 
 
         if (item.getItemId() == R.id.sharevacation) {
-            String shareMessage = editTitle.getText().toString() + " vacation. " + "Staying at " +
-                    editHotel.getText().toString() + ". From " + editStartDate.getText().toString() +
-                    " to " + editEndDate.getText().toString();
+            String shareMessage = editTitle.getText().toString() + " vacation. " + "Staying at: " +
+                    editHotel.getText().toString() + ". From: " + editStartDate.getText().toString() +
+                    " to " + editEndDate.getText().toString() + ". ";
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TITLE, "Vacation: " + editTitle.getText().toString());
