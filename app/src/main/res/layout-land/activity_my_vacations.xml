@@ -55,5 +55,4 @@
         app:layout_constraintVertical_bias="0.359"
         app:srcCompat="@drawable/outline_beach_access_24" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

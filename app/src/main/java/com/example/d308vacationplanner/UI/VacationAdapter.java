@@ -86,5 +86,4 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
         notifyDataSetChanged();
     }
 
-
 }

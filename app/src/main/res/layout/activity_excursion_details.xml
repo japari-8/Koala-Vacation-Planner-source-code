@@ -24,17 +24,16 @@
         android:id="@+id/scrollView"
         android:layout_width="409dp"
         android:layout_height="300dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview7"
         android:layout_marginTop="10dp"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview7">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:orientation="vertical">
 
@@ -76,8 +75,6 @@
                     android:inputType="text" />
             </LinearLayout>
 
-
-
         </LinearLayout>
     </ScrollView>
 
@@ -87,10 +84,10 @@
         android:layout_marginBottom="50dp"
         android:background="#cbccc9"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <TextView
         android:id="@+id/textView7"
@@ -119,7 +116,6 @@
         android:layout_marginTop="50dp"
         android:background="#cbccc9"
         app:layout_constraintTop_toBottomOf="@id/spinner"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -133,7 +129,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

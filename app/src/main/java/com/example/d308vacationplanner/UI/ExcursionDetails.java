@@ -62,8 +62,6 @@ public class ExcursionDetails extends AppCompatActivity {
             return insets;
         });
 
-        //Excursion excursion;
-
         editTitle = findViewById(R.id.excursiontitle);
         editDate = findViewById(R.id.excursiondate);
 
@@ -72,10 +70,7 @@ public class ExcursionDetails extends AppCompatActivity {
         excursionDate = getIntent().getStringExtra("date");
         vacationIdEx = getIntent().getLongExtra("vacationId", -1);
 
-        //assocVacationId
         assocVacationId = getIntent().getLongExtra("associatedVacationId", -1);
-
-        //Log.d(TAG, "assocVacaIdFromRecyclerOrFab " + vacationIdEx);
 
         editTitle.setText(excursionTitle);
         editDate.setText(excursionDate);
@@ -156,34 +151,13 @@ public class ExcursionDetails extends AppCompatActivity {
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-
-//                Vacation vacation;
-//                if (excursionId == -1) {
-//                    try {
-//                        repository = new Repository(getApplication());
-//                        vacation = repository.getVacationById(assocVacationId);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                } else {
-//                    try {
-//                        repository = new Repository(getApplication());
-//                        vacation = repository.getVacationById(vacationIdEx);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
                 Date vacationStDate = currentVacation.getStartDate();
                 Date vacationSEdDate = currentVacation.getEndDate();
                 assert exDate != null;
+
                 if (exDate.before(vacationStDate) || (exDate.after(vacationSEdDate))) {
                     Toast.makeText(ExcursionDetails.this, "This date must be during the vacation dates", Toast.LENGTH_LONG).show();
                 }
-
-//                Log.d(TAG, "MYvacationStDate " + vacationStDate);
-//                Log.d(TAG, "MYvacationEdDate " + vacationSEdDate);
-//                Log.d(TAG, "MYexcursionEdDate " + exDate);
-
                 else {
                     if (excursionId == -1) {
                         Excursion excursion = new Excursion(0, editTitle.getText().toString(), exDate, currentVacation.getVacationId());

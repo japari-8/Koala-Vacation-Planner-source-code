@@ -315,9 +315,26 @@ public class VacationDetails extends AppCompatActivity {
 
 
         if (item.getItemId() == R.id.sharevacation) {
+            repository = new Repository(getApplication());
+            List<Excursion> allExcursions;
+            try {
+                allExcursions = repository.getmListAssociatedExcursions(vacationId);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            StringBuilder builder = new StringBuilder();
+            String ts = "";
+            String ds = "";
+            for (Excursion e : allExcursions) {
+                ts = e.getTitle();
+                ds = sdf.format(e.getDate());
+                builder.append(ts).append(" ");
+                builder.append(ds).append(", ");
+            }
+            String allExcursionsString = builder.toString();
             String shareMessage = editTitle.getText().toString() + " vacation. " + "Staying at: " +
                     editHotel.getText().toString() + ". From: " + editStartDate.getText().toString() +
-                    " to " + editEndDate.getText().toString() + ". ";
+                    " to " + editEndDate.getText().toString() + ". " + "Excursions are: " + allExcursionsString;
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TITLE, "Vacation: " + editTitle.getText().toString());
@@ -380,10 +397,6 @@ public class VacationDetails extends AppCompatActivity {
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         excursionAdapter.setmExcursions(allExcursions);
-
-        //Log.d(TAG, "vacationIdExDet " + vacationId);
-
     }
-
 
 }

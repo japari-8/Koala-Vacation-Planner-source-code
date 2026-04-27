@@ -63,28 +63,6 @@ public class MyVacations extends AppCompatActivity {
 
     }
 
-    // This method creates an Actions bar menu.
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_my_vacations, menu);
-        return true;
-    }
-
-    // This method handles the back button manually.
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if(id == android.R.id.home){
-            finish();
-            return  true;
-        }
-
-        if(id == R.id.sample){}
-            //Toast.makeText(MyVacations.this, "This will delete a vacation", Toast.LENGTH_LONG).show();
-            //repository.deleteVacation();
-        return true;
-    }
 
     protected void onResume() {
         super.onResume();
