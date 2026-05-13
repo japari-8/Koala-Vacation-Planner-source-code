@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="magnify_grey_color">#666666</color>
+    <color name="divider_line_color">#e6e6e6</color>
+    <color name="error_message">#FF0000</color>
+</resources>

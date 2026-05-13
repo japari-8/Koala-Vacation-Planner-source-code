@@ -196,6 +196,9 @@ public class VacationDetails extends AppCompatActivity {
                 Vacation vacation;
                 Date dateSt;
                 Date dateEd;
+
+                String flag = convertCtryToFlag(editTitle.getText().toString());
+
                 try {
                     dateString1 = new DateString();
                     dateSt = dateString1.stringToDate(editStartDate.getText().toString());
@@ -210,7 +213,6 @@ public class VacationDetails extends AppCompatActivity {
                             "Start date", Toast.LENGTH_LONG).show();
                 }
                 else {
-
                     if (vacationId == -1) {
                         try {
                             if (repository.getmListVacations().isEmpty()) {
@@ -221,7 +223,7 @@ public class VacationDetails extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                        vacation = new Vacation(vacationId, editTitle.getText().toString(), editHotel.getText().toString(), dateSt, dateEd);
+                        vacation = new Vacation(vacationId, editTitle.getText().toString() + " " + flag, editHotel.getText().toString(), dateSt, dateEd);
                         try {
                             repository.addVacation(vacation);
                         } catch (InterruptedException e) {
@@ -243,6 +245,27 @@ public class VacationDetails extends AppCompatActivity {
 
         });
 
+    }
+
+    public String convertCtryToFlag(String ctryName) {
+        String ctryCode = "";
+        for (String isoCode : java.util.Locale.getISOCountries()) {
+            Locale locale = new Locale("",isoCode);
+            if (locale.getDisplayCountry().equalsIgnoreCase(ctryName)) {
+                ctryCode = isoCode;
+                break;
+            }
+        }
+        if (ctryName == null || ctryCode.length() != 2) {
+            return "";
+        }
+        else {
+            int char1 = Character.codePointAt(ctryCode, 0) - 0x41 + 0x1F1E6;
+            int char2 = Character.codePointAt(ctryCode, 1) - 0x41 + 0x1F1E6;
+            String flagStringChar1 = new String(Character.toChars(char1));
+            String flagStringChar2 = new String(Character.toChars(char2));
+            return flagStringChar1 + flagStringChar2;
+        }
     }
 
 

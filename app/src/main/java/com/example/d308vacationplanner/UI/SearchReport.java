@@ -43,7 +43,7 @@ public class SearchReport extends AppCompatActivity {
             }
             }, 300);
 
-        searchView.setSubmitButtonEnabled(true);
+        //searchView.setSubmitButtonEnabled(true);
 
         RecyclerView searchRecyclerView = findViewById(R.id.searchRecyclerview);
         Repository repository = new Repository(getApplication());
@@ -53,8 +53,7 @@ public class SearchReport extends AppCompatActivity {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        final SearchAdapter searchAdapter = new SearchAdapter(allVacations);
+        final SearchAdapter searchAdapter = new SearchAdapter(allVacations, this);
         searchRecyclerView.setAdapter(searchAdapter);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -14,10 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.D308VacationPlanner">
         <activity
+            android:name=".UI.Reports"
+            android:exported="false"
+            android:parentActivityName=".UI.SearchReport" />
+        <activity
             android:name=".UI.SearchReport"
             android:exported="false"
             android:parentActivityName=".UI.MainActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <receiver
             android:name=".UI.MyReceiver"
@@ -40,6 +44,10 @@
             android:parentActivityName=".UI.MainActivity" />
         <activity
             android:name=".UI.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".UI.Login"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

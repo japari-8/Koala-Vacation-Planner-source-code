@@ -1,5 +1,8 @@
 package com.example.d308vacationplanner.UI;
 
+import android.content.Context;
+import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +16,17 @@ import com.example.d308vacationplanner.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.searchItemViewHolder> {
     private List<Vacation> mVacations;
     private List<Vacation> mVacationsFull;
+    private final Context context;
 
-    public SearchAdapter(List<Vacation> listToSearch){
+    public SearchAdapter(List<Vacation> listToSearch, Context context){
         this.mVacations = new ArrayList<>(listToSearch);
         this.mVacationsFull = new ArrayList<>(listToSearch);
+        this.context = context;
     }
 
     public class searchItemViewHolder extends RecyclerView.ViewHolder {
@@ -28,6 +34,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.searchItem
         searchItemViewHolder(View v) {
             super(v);
             vacationItemView = v.findViewById(R.id.textView8);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAbsoluteAdapterPosition();
+                    final Vacation current = mVacations.get(position);
+                    Intent intent = new Intent(context, Reports.class);
+                    intent.putExtra("vacationId", current.getVacationId());
+                    intent.putExtra("title", current.getTitle());
+                    intent.putExtra("hotel", current.getHotel());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                    intent.putExtra("startDate", simpleDateFormat.format(current.getStartDate()));
+                    intent.putExtra("endDate", simpleDateFormat.format(current.getEndDate()));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
