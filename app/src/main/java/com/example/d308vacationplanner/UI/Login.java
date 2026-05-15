@@ -43,10 +43,11 @@ public class Login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(userName.getText().toString().equals("user")  && passWord.getText().toString().equals("Password")) {
+                if(userName.getText().toString().equals("user")  && passWord.getText().toString().equals("Welcome")) {
                     errorMessage.setVisibility(View.GONE);
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     String errorString = "Wrong username or password";
