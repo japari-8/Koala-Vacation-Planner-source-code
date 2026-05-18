@@ -3,6 +3,26 @@
     <style name="Base.Theme.D308VacationPlanner" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+<!--        <item name="android:colorBackground">@color/light_yellow</item>-->
+
+        <!--        Primary brand color and variant-->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/dark_green</item>
+        <item name="colorAccent">@color/green</item>
+        <item name="colorPrimaryVariant">@color/dark_green</item>
+<!--        <item name="colorOnPrimary">@color/black</item>-->
+
+        <!--        Secondary brand color and variant-->
+        <item name="colorSecondary">@color/light_yellow</item>
+        <item name="colorSecondaryVariant">@color/gold</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+<!--        <item name="android:statusBarColor">@color/dark_green</item>-->
+        <item name="android:navigationBarColor">@color/green</item>
+
     </style>
 
     <style name="Theme.D308VacationPlanner" parent="Base.Theme.D308VacationPlanner" />

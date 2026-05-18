@@ -29,5 +29,7 @@
     <string name="choose_vacation_associated_with_excursion">Choose vacation associated with this excursion</string>
     <string name="search_vacations">Search vacations</string>
     <string name="searched_vacation_report">Searched Vacation Report</string>
+    <string name="home">Home</string>
+    <string name="koala_vacation_planner">Koala Vacation Planner</string>
 
 </resources>

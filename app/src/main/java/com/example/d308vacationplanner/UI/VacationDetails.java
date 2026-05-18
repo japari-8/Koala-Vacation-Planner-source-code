@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -69,6 +71,11 @@ public class VacationDetails extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(
+                    this, R.color.light_green)));
+        }
 
         editTitle = findViewById(R.id.vacationtitle);
         editHotel = findViewById(R.id.vacationhotel);
@@ -186,7 +193,6 @@ public class VacationDetails extends AppCompatActivity {
             }
         };
 
-
         // This method is called when the Save button is clicked. This method adds or updates a vacation.
         // It also checks if the end date is after the start date.
         Button saveButton = findViewById(R.id.saveButton);
@@ -268,19 +274,17 @@ public class VacationDetails extends AppCompatActivity {
         }
     }
 
-
     // This method is used to set startDate and endDate on the screen from the datePicker.
     private void updateDate(EditText editText){
         editText.setText(sdf.format(mCalender.getTime()));
     }
 
-    // This method creates an Actions bar menu.
+    // This method creates an Action bar menu.
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_vacation_details, menu);
         return true;
     }
-
 
     // This method has menu items to delete and set Alerts.
     // It also handles the back button manually.
@@ -305,9 +309,8 @@ public class VacationDetails extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.setalertsV) {
-            scheduleAlert(dateSt.getTime(), editTitle.getText().toString() + "vacation is starting");
-            scheduleAlert(dateEd.getTime(), editTitle.getText().toString() + "Vacation is ending");
-
+            scheduleAlert(dateSt.getTime(), editTitle.getText().toString() + " vacation is starting");
+            scheduleAlert(dateEd.getTime(), editTitle.getText().toString() + " Vacation is ending");
             return true;
         }
 
@@ -335,7 +338,6 @@ public class VacationDetails extends AppCompatActivity {
                 Toast.makeText(VacationDetails.this, "Can't delete a Vacation with excursions", Toast.LENGTH_LONG).show();
             }
         }
-
 
         if (item.getItemId() == R.id.sharevacation) {
             repository = new Repository(getApplication());
@@ -366,6 +368,12 @@ public class VacationDetails extends AppCompatActivity {
             Intent shareIntent = Intent.createChooser(sendIntent, null);
             startActivity(shareIntent);
             return true;
+        }
+
+        if (item.getItemId() == R.id.returnHome) {
+            Intent intent = new Intent(VacationDetails.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         return true;

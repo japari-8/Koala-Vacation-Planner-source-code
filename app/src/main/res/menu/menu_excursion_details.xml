@@ -6,4 +6,8 @@
         android:id="@+id/deleteExcursion"/>
     <item android:title="@string/set_alerts"
         android:id="@+id/setExcursionAlert"/>
+    <item android:title="@string/home"
+        android:id="@+id/returnHome2"/>
+    <item android:title="@string/my_vacations"
+        android:id="@+id/returnToMyVacations"/>
 </menu>

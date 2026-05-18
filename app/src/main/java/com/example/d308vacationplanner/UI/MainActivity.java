@@ -3,6 +3,7 @@ package com.example.d308vacationplanner.UI;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -40,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(
+                    this, R.color.light_green)));
+        }
+
         LinearLayout linearLayout = findViewById(R.id.searchButton);
         linearLayout.setOnClickListener(new View.OnClickListener() {
 
@@ -60,49 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-
         });
-//            SearchView searchView = findViewById(R.id.searchView);
-//        //searchView.setSubmitButtonEnabled(true);
-//        RecyclerView searchRecyclerView = findViewById(R.id.searchRecyclerview);
-//
-//        Repository repository = new Repository(getApplication());
-//        List<Vacation> allVacations;
-//        try {
-//            allVacations = repository.getmListVacations();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        SearchAdapter searchAdapter = new SearchAdapter(allVacations);
-//        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        searchRecyclerView.setAdapter(searchAdapter);
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                searchAdapter.searchThis(newText);
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                searchAdapter.searchThis(query);
-//                return true;
-//            }
-//        });
-
-//        RecyclerView recyclerView = findViewById(R.id.searchRecyclerview);
-//        Repository repository = new Repository(getApplication());
-//        List<Vacation> allVacations;
-//        try {
-//            allVacations = repository.getmListVacations();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        final VacationAdapter vacationAdapter = new VacationAdapter(this);
-//        recyclerView.setAdapter(vacationAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        vacationAdapter.setVacations(allVacations);
     }
 }

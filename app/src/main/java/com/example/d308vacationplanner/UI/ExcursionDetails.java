@@ -5,19 +5,24 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -50,6 +55,8 @@ public class ExcursionDetails extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
     Spinner spinner;
     Vacation currentVacation;
+    TextView vacationDates;
+    String vacationDatesSt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,19 @@ public class ExcursionDetails extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(
+                    this, R.color.light_yellow)));
+        }
+
+        // This block of code adds the Koala logo to the action bar
+//        ActionBar actBar = getSupportActionBar();
+//        if (actBar != null) {
+//            actBar.setDisplayShowHomeEnabled(true);
+//            actBar.setLogo(R.drawable.koala);
+//            actBar.setDisplayUseLogoEnabled(true);
+//        }
 
         editTitle = findViewById(R.id.excursiontitle);
         editDate = findViewById(R.id.excursiondate);
@@ -129,6 +149,32 @@ public class ExcursionDetails extends AppCompatActivity {
                 currentVacation = vaca;
         }
         spinner.setSelection(vacationIdAdapter.getPosition(currentVacation));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Vacation current = (Vacation) spinner.getSelectedItem();
+                String stDate = sdf.format(current.getStartDate());
+                String endDate = sdf.format(current.getEndDate());
+                vacationDatesSt = stDate + "  " + endDate;
+
+                vacationDates = findViewById(R.id.textView20);
+                vacationDates.setText(vacationDatesSt);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+                Vacation current = (Vacation) spinner.getSelectedItem();
+                String stDate = sdf.format(current.getStartDate());
+                String endDate = sdf.format(current.getEndDate());
+                vacationDatesSt = stDate + "  " + endDate;
+
+                vacationDates = findViewById(R.id.textView20);
+                vacationDates.setText(stDate);
 
 
         Button saveButton = findViewById(R.id.saveButtonEx);
@@ -226,6 +272,19 @@ public class ExcursionDetails extends AppCompatActivity {
             assert excursionDate != null;
             scheduleAlert(excursionDate.getTime(), editTitle.getText().toString() + " excursion is today!");
         }
+
+        if (item.getItemId() == R.id.returnHome2) {
+            Intent intent = new Intent(ExcursionDetails.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if (item.getItemId() == R.id.returnToMyVacations) {
+            Intent intent = new Intent(ExcursionDetails.this, MyVacations.class);
+            startActivity(intent);
+            finish();
+        }
+
     return true;
     }
 

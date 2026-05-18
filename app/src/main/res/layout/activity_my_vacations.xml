@@ -12,6 +12,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="@string/add"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vacationRecyclerview" />
@@ -25,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addVacaButton"
-        app:srcCompat="@drawable/outline_beach_access_24" />
+        app:srcCompat="@drawable/koala" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vacationRecyclerview"
@@ -46,7 +47,7 @@
         android:layout_marginTop="45dp"
         android:text="@string/my_vacations"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="#343468"
+        android:textColor="@color/dark_green"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

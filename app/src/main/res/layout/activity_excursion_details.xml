@@ -11,14 +11,14 @@
         android:id="@+id/textview7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="#343468"
-        android:textStyle="bold"
         android:layout_marginTop="45dp"
         android:text="@string/excursion_details"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/gold"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -103,12 +103,11 @@
         android:id="@+id/spinner"
         android:layout_width="305dp"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
         android:layout_marginBottom="100dp"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@id/saveButtonEx"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
         android:layout_width="wrap_content"
@@ -129,5 +128,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="70dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveButtonEx"
+        app:srcCompat="@drawable/island"
+        app:tint="@color/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginStart="48dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

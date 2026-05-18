@@ -1,12 +1,13 @@
-# Title: Vacation Planner
+# Title: Koala Vacation Planner
 
 ## Purpose
 Android mobile application that allows users to add, update, and delete vacations as well as 
-excursions. Also allows for sharing vacations with others and setting notifications.
+excursions. Also allows for sharing vacations with others and setting notifications. 
+Additional features include search and report  generation.
 
 ## Author
-Juan Aparicio Contact: japari6@wgu.edu
-V 0.0.1 Date: 04-28-2026
+Juan Aparicio Jr Contact: japari6@wgu.edu
+V 0.0.2 Date: 04-28-2026
 
 ## GitLab Repository
 https://gitlab.com/wgu-gitlab-environment/student-repos/japari6/d308-mobile-application-development-android.git

@@ -3,4 +3,12 @@
     <color name="magnify_grey_color">#666666</color>
     <color name="divider_line_color">#e6e6e6</color>
     <color name="error_message">#FF0000</color>
+
+    <color name="dark_green">#14802A</color>
+    <color name="green">#38b249</color>
+    <color name="light_green">#e7f6e8</color>
+
+    <color name="gold">#e7a600</color>
+    <color name="light_yellow">#FEFADA</color>
+    <color name="black">#000000</color>
 </resources>

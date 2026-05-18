@@ -8,4 +8,6 @@
         android:id="@+id/setalertsV"/>
     <item android:title="@string/share_vacation"
           android:id="@+id/sharevacation"/>
+    <item android:title="@string/home"
+        android:id="@+id/returnHome"/>
 </menu>
