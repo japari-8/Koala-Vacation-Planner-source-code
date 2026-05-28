@@ -6,15 +6,16 @@ excursions. Also allows for sharing vacations with others and setting notificati
 Additional features include search and report  generation.
 
 ## Author
-Juan Aparicio Jr Contact: japari6@wgu.edu
+Juan Aparicio Jr  
+Contact: japari6@wgu.edu  
 V 0.0.2 Date: 04-28-2026
 
 ## GitLab Repository
 https://gitlab.com/wgu-gitlab-environment/student-repos/japari6/d308-mobile-application-development-android.git
 
 ## Tech Stack
-Language: Java
-Android Studio Panda 2 | 2025.3.2
+Language: Java  
+Android Studio Panda 2 | 2025.3.2  
 Target SDK: 36
 
 ## Directions
